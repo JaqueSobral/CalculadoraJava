@@ -1,52 +1,59 @@
-import java.util.Locale;
+
 import java.util.Scanner;
 
 public class Calculadora {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        boolean continuarCalculo = true;
 
-        Double valor1;
-        Double valor2;
-        String operação;
-        boolean continuarCalculo;
+        while (continuarCalculo) {
+            System.out.println("Bem-vinda à Calculadora! Escolha uma operação:");
+            System.out.println("1. Adição");
+            System.out.println("2. Subtração");
+            System.out.println("3. Multiplicação");
+            System.out.println("4. Divisão");
 
-        do {
-            System.out.println("Digite o valor 1: ");
-            valor1 = (Double) scanner.nextDouble();
+            System.out.print("Digite o número da operação desejada: ");
+            int opcao = scanner.nextInt();
 
-            System.out.println("Escolha uma operação: +, -, /, *");
-            operação = scanner.next();
+            System.out.print("Digite o primeiro número: ");
+            double num1 = scanner.nextDouble();
 
-            System.out.println("Digite o valor 2: ");
-            valor2 = (Double) scanner.nextDouble();
+            System.out.print("Digite o segundo número: ");
+            double num2 = scanner.nextDouble();
 
-            System.out.println("Resultado é: " + realizarCalculo(valor1, valor2, operação));
-            continuarCalculo = verificarNovoCalculo();
-        } while (continuarCalculo);
-    }
+            double resultado;
 
-    public static boolean verificarNovoCalculo(){
-        Scanner novaOperação = new Scanner(System.in);
-        System.out.println("Deseja realizar um novo calculo? S ou N");
-        return !novaOperação.nextLine().toUpperCase(Locale.ROOT).equals("N");
-    }
-    public static Double realizarCalculo(Double valor1, Double valor2, String operação){
-        Double resultadoDoCalculo = (Double) 0.0;
-
-        switch(operação){
-            case "+":
-            resultadoDoCalculo = valor1 + valor2;
-            case "-":
-            resultadoDoCalculo = valor1 - valor2;
-            case "/":
-            resultadoDoCalculo = valor1 / valor2;
-            case "*":
-            resultadoDoCalculo = valor1 * valor2;
-            break;
-            default:
-                System.out.println("Operação inválida.Tente colocar outro valor!!");
+            switch (opcao) {
+                case 1:
+                    resultado = num1 + num2;
+                    System.out.println("Resultado da adição: " + resultado);
+                    break;
+                case 2:
+                    resultado = num1 - num2;
+                case 3:
+                    resultado = num1 * num2;
+                    System.out.println("Resultado da multiplicação: " + resultado);
+                    break;
+                case 4:
+                    if (num2 != 0) {
+                        resultado = num1 / num2;
+                        System.out.println("Resultado da divisão: " + resultado);
+                    } else {
+                        System.out.println("Erro: Divisão por zero não é permitida!");
+                    }
+                    break;
+                default: System.out.println("Opção inválida! Tente novamente.");
         }
-        return resultadoDoCalculo;
-    }
+            System.out.print("\nDeseja realizar outra operação? (S/N): ");
+            char resposta = scanner.next().toUpperCase().charAt(0);
 
+            if (resposta == 'N') {
+                continuarCalculo = false;
+                System.out.println("Encerrando a calculadora. Até a próxima!");
+            }
+        }
+        scanner.close();
+    }
 }
+
